@@ -1,0 +1,10 @@
+
+\.idea/
+
+*.pyc
+
+venv/
+
+main\.py
+
+subredditgen\.conf
