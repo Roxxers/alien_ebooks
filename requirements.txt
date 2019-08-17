@@ -1,0 +1,6 @@
+psycopg2
+pony
+flask
+flask-restful
+praw
+markovify
