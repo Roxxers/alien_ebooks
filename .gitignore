@@ -8,3 +8,5 @@ venv/
 main\.py
 
 subredditgen\.conf
+
+.vscode/

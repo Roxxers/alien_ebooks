@@ -4,4 +4,4 @@ from subredditgenerator import app
 
 @app.route("/")
 def index():
-    return """<h1>hallo world</h1>"""
+    return render_template("index.html")
