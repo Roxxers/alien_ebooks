@@ -8,4 +8,4 @@ from flask_restful import Api
 
 sub_api = Api(app)
 
-from subredditgenerator import models, routes, api
+from subredditgenerator import models, routes, api, markov, cache

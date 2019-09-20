@@ -2,8 +2,8 @@ import praw
 import markovify
 from pony.orm import db_session
 
-from subredditgenerator import app, sub_api, models
-from flask_restful import Resource, reqparse
+from subredditgenerator import app, sub_api, models, markov
+from flask_restful import Resource, reqparse, abort
 from flask import jsonify
 
 
@@ -15,41 +15,35 @@ reddit = praw.Reddit(
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('amount', default=0, type=int, help="Amount of markov-chain titles to return.")
 
 
 class SubredditEndpoint(Resource):
-    # TODO: Pls fix me in later use so I can be used properly when I need to request a new sub for the db
     @db_session
     def get(self, name):
+        # Maybe allow multiple subreddits in future
+        parser.add_argument('amount', default=1, type=int, help="Amount of markov-chain titles to return.")
+
         name = name.lower()
         args = parser.parse_args()
-        subreddits = []
+        subreddit = models.Subreddit.get(name=name)
 
-        for name in name.split("+"):
-            subreddits.append(reddit.subreddit(name))
+        # If we can't find the subreddit in the db, return 404
+        if not subreddit:
+            abort(404, message="Subreddit not found in our database")
+        else:
+            gen = markov.MarkovGenerator(subreddit)
+            sentences = gen.generate_sentences(args["amount"])
+            return jsonify(sentences)
 
 
-        for subreddit in subreddits:
-            if not models.Subreddit.get(id=int(subreddit.id, 36)):
-                db_sub = models.Subreddit(id=int(subreddit.id, 36), name=subreddit.display_name.lower())
-                for submission in subreddit.top(limit=None):
-                    models.Titles(id=int(submission.id, 36), title=submission.title, subreddit=db_sub)
-
-        titles = ""
-        for subreddit in subreddits:
-            for post in models.Subreddit.get(id=int(subreddit.id, 36)).titles:
-                titles += f"{post.title}\n"
-
-        text_chain = markovify.NewlineText(titles, well_formed=False, state_size=2)
-        gen_sent = []
-
-        # Only allow a max of 20 to be generated
-        num_gen = args["amount"] if args["amount"] <= 20 else 20
-        for _ in range(num_gen):
-            gen_sent.append(text_chain.make_sentence())
-        return jsonify(gen_sent)
+    
+    #@db_session
+    #def post(self, name):
+    #    subreddit = reddit.subreddit(name)
+    #    db_sub = models.Subreddit(name=subreddit.display_name.lower())
+    #    for submission in subreddit.top(limit=None):
+    #        models.Titles(id=int(submission.id, 36), title=submission.title, subreddit=db_sub)
 
 
 
-sub_api.add_resource(SubredditEndpoint, '/api/subreddit/<name>')
+sub_api.add_resource(SubredditEndpoint, '/api/v1/subreddit/<name>/markov')

@@ -4,3 +4,4 @@ flask
 flask-restful
 praw
 markovify
+pymemcache
