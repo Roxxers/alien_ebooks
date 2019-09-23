@@ -1,15 +1,14 @@
 
 import markovify
 from pony.orm import db_session
-from subredditgenerator import cache
 
 
 class MarkovGenerator:
 
-    def __init__(self, subreddit_entity):
+    def __init__(self, subreddit_entity, cache):
         self.subreddit = subreddit_entity
         self.titles = "\n".join(self.subreddit.titles.title)
-        self.cache = cache.Cache()
+        self.cache = cache
         
     def _get_markov_cache(self):
         return self.cache.get(self.subreddit.name)

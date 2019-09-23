@@ -14,3 +14,5 @@ DB_DATABASE = file["db"]["database"]
 CLIENT_ID = file["reddit"]["client_id"]
 CLIENT_SECRET = file["reddit"]["client_secret"]
 USER_AGENT = file["reddit"]["user_agent"]
+
+SCHEDULER_API_ENABLED = True

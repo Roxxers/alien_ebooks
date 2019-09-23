@@ -1,8 +1,10 @@
 import praw
+import asyncio
 import markovify
 from pony.orm import db_session
 
 from subredditgenerator import app, sub_api, models, markov
+from subredditgenerator import mem_cache
 from flask_restful import Resource, reqparse, abort
 from flask import jsonify
 
@@ -31,7 +33,7 @@ class SubredditEndpoint(Resource):
         if not subreddit:
             abort(404, message="Subreddit not found in our database")
         else:
-            gen = markov.MarkovGenerator(subreddit)
+            gen = markov.MarkovGenerator(subreddit, mem_cache)
             sentences = gen.generate_sentences(args["amount"])
             return jsonify(sentences)
 
