@@ -4,9 +4,21 @@
 
 {% block content %}
     <h1 id="gen" class="title">hallo</h1>
-    <button onclick="refresh_titles(1)">Click me</button>
+    <form id="subreddit_request_form" name="sInput" class="form" onsubmit="return get_titles(1);">
+        <div class="field has-addons">
+            <div class="control">
+                <input name="sName" class="input" type="text" placeholder="Subreddit">
+            </div>
+            <div class="control">
+                <input type=submit class="button is-info" value="Submit">
+                </input>
+            </div>
+        </div>
+    </form>
+
 {% endblock content %}
 {% block scripts %}
     <script type="text/typescript" src="static/js/requests.ts"></script>
-    {{ super() }}
+    <script type="text/javascript" src="static/js/typescript.min.js"></script>
+    <script type="text/javascript" src="static/js/typescript.compile.min.js"></script>
 {% endblock scripts %}
