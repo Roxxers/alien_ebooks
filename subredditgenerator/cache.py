@@ -6,7 +6,7 @@ from pymemcache.client import base
 
 
 class Cache:
-    def __init__(self, host="localhost", port=11211):
+    def __init__(self, host: str="localhost", port: int=11211):
         self.client = base.Client((host, port))
         self.time_of_access = {}
 

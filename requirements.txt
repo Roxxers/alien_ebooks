@@ -1,4 +1,4 @@
-psycopg2
+psycopg2-binary
 pony
 flask
 flask-restful
@@ -6,3 +6,4 @@ flask_apscheduler
 praw
 markovify
 pymemcache
+python-dotenv

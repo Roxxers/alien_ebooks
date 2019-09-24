@@ -2,10 +2,8 @@
 import datetime
 from subredditgenerator import scheduler, mem_cache
 
-
 CLEAR_CACHE_HOUR = 1
 TIME_TO_STORE_CACHE = 6
-
 
 
 @scheduler.task('interval', id='clear_cache', hours=CLEAR_CACHE_HOUR, misfire_grace_time=900)

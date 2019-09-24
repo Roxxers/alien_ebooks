@@ -19,7 +19,7 @@ reddit = praw.Reddit(
 parser = reqparse.RequestParser()
 
 
-class SubredditEndpoint(Resource):
+class SubredditMarkovEndpoint(Resource):
     @db_session
     def get(self, name):
         # Maybe allow multiple subreddits in future
@@ -38,14 +38,20 @@ class SubredditEndpoint(Resource):
             return jsonify(sentences)
 
 
+class SubredditBuildEndpoint(Resource):
+    def get(self, name):
+        pass
+
+
+class SubredditInfoEndpoint(Resource):
+    def get(self, name):
+        pass
     
-    #@db_session
-    #def post(self, name):
-    #    subreddit = reddit.subreddit(name)
-    #    db_sub = models.Subreddit(name=subreddit.display_name.lower())
-    #    for submission in subreddit.top(limit=None):
-    #        models.Titles(id=int(submission.id, 36), title=submission.title, subreddit=db_sub)
+
+class SubredditsEndpoint(Resource):
+    def get(self):
+        pass
 
 
-
-sub_api.add_resource(SubredditEndpoint, '/api/v1/subreddit/<name>/markov')
+sub_api.add_resource(SubredditMarkovEndpoint, '/api/v1/subreddit/<name>/markov')
+sub_api.add_resource(SubredditBuildEndpoint, '/api/v1/subreddit/<name>/progress')

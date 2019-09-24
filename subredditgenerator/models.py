@@ -8,7 +8,8 @@ db.bind(
     user=app.config["DB_USER"],
     password=app.config["DB_PASSWORD"],
     host=app.config["DB_HOST"],
-    database=app.config["DB_DATABASE"]
+    database=app.config["DB_DATABASE"],
+    port=app.config["DB_PORT"]
     )
 
 

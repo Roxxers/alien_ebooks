@@ -10,3 +10,5 @@ main\.py
 subredditgen\.conf
 
 .vscode/
+
+.env.development
