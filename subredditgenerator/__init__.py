@@ -15,7 +15,7 @@ sub_api = Api(app)
 scheduler.init_app(app)
 scheduler.start()
 
-mem_cache = cache.Cache(host=app.config["MEMCACHED_HOST"])#, port=app.config["MEMCACHED_PORT"])
+mem_cache = cache.Cache(host=app.config["MEMCACHED_HOST"], port=int(app.config["MEMCACHED_PORT"]))
 mem_cache.flush()
 
 from subredditgenerator import models, routes, api, markov, tasks
