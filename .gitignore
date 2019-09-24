@@ -12,3 +12,5 @@ subredditgen\.conf
 .vscode/
 
 .env.development
+
+postgres
