@@ -13,4 +13,6 @@ subredditgen\.conf
 
 .env.development
 
+.env.production
+
 postgres
