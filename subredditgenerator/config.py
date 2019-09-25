@@ -4,7 +4,7 @@ from os.path import join, dirname
 from dotenv import load_dotenv
  
 # We load the env file for when the program is run from source rather than docker.
-env_file = ".env.development" if os.getenv("SUBREDDIT_END") == "development" else ".env.production"
+env_file = ".env" 
 dotenv_path = join(dirname(__file__), env_file)
 load_dotenv(dotenv_path)
 
