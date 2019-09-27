@@ -16,3 +16,7 @@ subredditgen\.conf
 postgres
 
 redis
+
+*.js
+
+__pycache__/
