@@ -14,3 +14,5 @@ subredditgen\.conf
 .env
 
 postgres
+
+redis

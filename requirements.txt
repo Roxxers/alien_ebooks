@@ -7,3 +7,5 @@ praw
 markovify
 pymemcache
 python-dotenv
+celery
+redis

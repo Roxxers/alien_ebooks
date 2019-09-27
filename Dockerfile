@@ -15,3 +15,5 @@ ENV SUBREDDIT_USING_DOCKER=1
 RUN pip install --no-cache-dir -r requirements.txt
 
 CMD ["python3", "app.py"]
+
+# TODO: Add user creation so that this isn't being run as root
