@@ -20,13 +20,13 @@ services:
     volumes:
       - ./redis:/data
     ports:
-      - 6379:6379
+      - 127.0.0.1:6379:6379
 
   celery:
     build: ./
     restart: always
     env_file: .env
-    command: celery -A subredditgenerator.celery worker -l info
+    command: celery -A subredditgenerator.celery worker -l warning
     volumes:
       - ./:/usr/src/app
     depends_on:

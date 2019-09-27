@@ -9,9 +9,8 @@ app.config.from_pyfile('config.py')
 import praw
 from pony.flask import Pony
 from flask_restful import Api
-from flask_apscheduler import APScheduler
-from subredditgenerator.cache import Cache
 
+from subredditgenerator.cache import Cache
 
 # Setup Reddit Praw client
 
@@ -24,14 +23,10 @@ reddit = praw.Reddit(
 # Wrap all routes (except api endpoints) with db_session
 Pony(app)
 
-# Setup APScheduler and make it flask compaitable 
-scheduler = APScheduler()
-
 sub_api = Api(app)
-scheduler.init_app(app)
-scheduler.start()
+
 
 # Setup redis client
 cache = Cache(host=app.config["REDIS_HOST"], port=int(app.config["REDIS_PORT"]))
 
-from subredditgenerator import models, routes, api, markov, tasks, celery
+from subredditgenerator import models, routes, api, markov, tasks

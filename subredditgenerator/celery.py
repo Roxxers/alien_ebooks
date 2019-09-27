@@ -1,9 +1,14 @@
+
+import datetime
+
 from celery import Celery
-from subredditgenerator import config, models, reddit
+from pony.orm import db_session, select
 
-from pony.orm import db_session
+from subredditgenerator import cache, config, models, reddit
 
-celery = Celery('tasks', broker=f"{config.REDIS_URI}0", backend=f"{config.REDIS_URI}0")
+        
+        
+celery = Celery('background_tasks', broker=f"{config.REDIS_URI}0", backend=f"{config.REDIS_URI}0")
 
 
 @celery.task

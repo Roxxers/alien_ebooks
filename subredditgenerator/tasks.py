@@ -1,17 +1,39 @@
 
 import datetime
-from subredditgenerator import scheduler, cache
 
-CLEAR_CACHE_HOUR = 1
-TIME_TO_STORE_CACHE = 6
+from flask_apscheduler import APScheduler
+from pony.orm import db_session, select
+
+from subredditgenerator import app, cache, models
 
 
-@scheduler.task('interval', id='clear_cache', hours=CLEAR_CACHE_HOUR, misfire_grace_time=900)
-def clear_cache():
-    now = datetime.datetime.now()
-    
-    cache_helper = cache.time_of_access.copy()
-    for key, value in cache_helper.items():
-        if (now - value) > datetime.timedelta(hours=TIME_TO_STORE_CACHE):
-            cache.delete(key)
-            cache.time_of_access.pop(key)
+with db_session:
+    subreddits = select(s.name for s in models.Subreddit)[:]
+    for subreddit in subreddits:
+        cache.delete(subreddit)
+
+
+CLEAR_CACHE_RATE = 1
+HOURS_TO_STORE_CACHE = 6
+
+# Setup APScheduler and make it flask compaitable 
+scheduler = APScheduler()
+
+scheduler.init_app(app)
+scheduler.start()
+
+
+@scheduler.task('interval', id='clear_cache', hours=CLEAR_CACHE_RATE, misfire_grace_time=900)
+def clean_cache():
+    now = datetime.datetime.utcnow()
+    with db_session:
+        subreddits = select(s.name for s in models.Subreddit)[:]
+
+    for subreddit in subreddits:
+        value = cache.accesslog_get(subreddit)
+        # Check if value is not none as if it is, the accesslog for this subreddit doesn't exist
+        # Therefore nothing needs to be done as it hasn't been accessed.
+        if value:
+            if (now - value) > datetime.timedelta(hours=HOURS_TO_STORE_CACHE):
+                cache.delete(subreddit)
+                cache.accesslog_delete(subreddit)

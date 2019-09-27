@@ -19,7 +19,6 @@ class MarkovGenerator:
     def _make_markov_chain(self):
         return markovify.NewlineText(self.titles, well_formed=False, state_size=2)
     
-    @db_session
     def generate_sentences(self, amount=1):
         max_amount = 20
         amount = amount if amount <= max_amount else max_amount  # Only allow a max of 20 to be generated
