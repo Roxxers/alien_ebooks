@@ -3,7 +3,7 @@ from subredditgenerator import config, models, reddit
 
 from pony.orm import db_session
 
-celery = Celery('tasks', broker=config.REDIS_URI, backend=config.REDIS_URI)
+celery = Celery('tasks', broker=f"{config.REDIS_URI}0", backend=f"{config.REDIS_URI}0")
 
 
 @celery.task

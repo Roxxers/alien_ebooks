@@ -11,12 +11,6 @@ services:
       - 5432:5432
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
-  
-  memcached:
-    image: memcached:1.5.12-alpine
-    restart: always
-    ports:
-      - 11211:11211
 
   redis:
     image: redis:5.0-alpine
@@ -49,7 +43,6 @@ services:
     ports:
       - 127.0.0.1:5000:80
     depends_on:
-      - memcached
       - postgres
       - redis
       - celery

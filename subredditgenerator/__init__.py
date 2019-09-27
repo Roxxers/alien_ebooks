@@ -1,6 +1,7 @@
 from flask import Flask
 
 # TODO: Before deploying to production, get a way to switch between development and production so that we can run a development server and a production server and not have to edit any docker files.
+# TODO: Setup logging for all parts of the server
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -9,7 +10,7 @@ import praw
 from pony.flask import Pony
 from flask_restful import Api
 from flask_apscheduler import APScheduler
-from subredditgenerator import cache
+from subredditgenerator.cache import Cache
 
 
 # Setup Reddit Praw client
@@ -30,7 +31,7 @@ sub_api = Api(app)
 scheduler.init_app(app)
 scheduler.start()
 
-# Setup memcached client
-mem_cache = cache.Cache(host=app.config["MEMCACHED_HOST"], port=int(app.config["MEMCACHED_PORT"]))
+# Setup redis client
+cache = Cache(host=app.config["REDIS_HOST"], port=int(app.config["REDIS_PORT"]))
 
 from subredditgenerator import models, routes, api, markov, tasks, celery

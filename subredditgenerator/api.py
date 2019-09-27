@@ -3,8 +3,7 @@ import asyncio
 import markovify
 from pony.orm import db_session
 
-from subredditgenerator import app, sub_api, models, markov, celery
-from subredditgenerator import mem_cache
+from subredditgenerator import app, sub_api, models, markov, celery, cache
 from flask_restful import Resource, reqparse, abort
 from flask import jsonify
 
@@ -50,7 +49,7 @@ class SubredditMarkovEndpoint(Resource):
             return response, response_code
         else:
             # Found subreddit in db, created sentences from a markov chain
-            gen = markov.MarkovGenerator(subreddit, mem_cache)
+            gen = markov.MarkovGenerator(subreddit, cache)
             sentences = gen.generate_sentences(args["amount"])
             
             response_code = 200

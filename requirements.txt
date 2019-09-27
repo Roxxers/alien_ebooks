@@ -5,7 +5,6 @@ flask-restful
 flask_apscheduler
 praw
 markovify
-pymemcache
 python-dotenv
 celery
 redis
