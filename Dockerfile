@@ -1,5 +1,5 @@
 FROM python:3.7.4-buster
-MAINTAINER Roxanne Gibson "me@roxxers.xyz"
+LABEL maintainer="me@roxxers.xyz"
 
 # Setting up vars
 
@@ -9,10 +9,12 @@ ENV SUBREDDIT_USING_DOCKER=1
 ENV INSTALL_DIR=/usr/src/app
 
 # Setup OS
-RUN apt-get update -y
-RUN apt-get install -y libpq-dev node-typescript
 # Installing libpq-dev for support of postgres db's to install python livs
 # Installing node-typescript to install typescript complier so we can compile ts later on
+RUN apt-get update -y
+RUN apt-get install -y --no-install-recommends libpq-dev node-typescript
+# Clean the cache and apt lists to save space in the image
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Setup Env
 # Create user to run code from rather than root
