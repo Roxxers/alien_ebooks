@@ -1,7 +1,18 @@
 {
     "python.pythonPath": "venv/bin/python3.7",
     "cSpell.words": [
-        "endblock"
+        "app",
+        "apscheduler",
+        "endblock",
+        "exception",
+        "markovify",
+        "praw",
+        "prawcore",
+        "rainbowroxxers",
+        "rdiv",
+        "reddit",
+        "subreddit",
+        "subreddits"
     ],
     "python.linting.enabled": true,
     "python.linting.pylintUseMinimalCheckers": false
