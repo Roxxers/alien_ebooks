@@ -1,0 +1,8 @@
+{
+    "python.pythonPath": "venv/bin/python3.7",
+    "cSpell.words": [
+        "endblock"
+    ],
+    "python.linting.enabled": true,
+    "python.linting.pylintUseMinimalCheckers": false
+}
