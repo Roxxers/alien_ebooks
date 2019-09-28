@@ -6,16 +6,11 @@ from pony.orm import db_session, select
 
 from subredditgenerator import app, cache, models
 
-with db_session:
-    subreddits = select(s.name for s in models.Subreddit)[:]
-    for subreddit in subreddits:
-        cache.delete(subreddit)
-
 
 CLEAR_CACHE_RATE = 1
 HOURS_TO_STORE_CACHE = 6
 
-# Setup APScheduler and make it flask compaitable 
+# Setup APScheduler and make it flask compatible
 scheduler = APScheduler()
 
 scheduler.init_app(app)
@@ -36,3 +31,9 @@ def clean_cache():
             if (now - value) > datetime.timedelta(hours=HOURS_TO_STORE_CACHE):
                 cache.delete(subreddit)
                 cache.accesslog_delete(subreddit)
+
+@db_session
+def delete_former_session_cache():
+    subreddits = select(s.name for s in models.Subreddit)[:]
+    for subreddit in subreddits:
+        cache.delete(subreddit)

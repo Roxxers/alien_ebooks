@@ -1,15 +1,15 @@
-	
+
 import os
 from os.path import dirname, join
 
 from dotenv import load_dotenv
 
 # We load the env file for when the program is run from source rather than docker.
-env_file = ".env" 
+env_file = ".env"
 dotenv_path = join(dirname(__file__), "../", env_file)
 load_dotenv(dotenv_path=dotenv_path)
 
-USING_DOCKER = os.getenv("SUBREDDIT_USING_DOCKER", False)
+USING_DOCKER = os.getenv("SUBREDDIT_USING_DOCKER")
 
 DB_ENGINE = "postgres"
 DB_HOST = "postgres" if USING_DOCKER else os.getenv('POSTGRES_HOST')

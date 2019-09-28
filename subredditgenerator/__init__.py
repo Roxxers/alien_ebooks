@@ -10,7 +10,7 @@ from subredditgenerator.cache import Cache
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
-# Setup Reddit Praw client
+# Setup Reddit praw client
 
 reddit = praw.Reddit(
     client_id=app.config["CLIENT_ID"],
