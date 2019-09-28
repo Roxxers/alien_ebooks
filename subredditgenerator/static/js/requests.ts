@@ -4,7 +4,7 @@ function get_titles(amount: number) {
     var request = new XMLHttpRequest();
     var subreddit: string = document.forms["sInput"]["sName"].value;
 
-    var url: string = "/api/v1/subreddit/" + subreddit + "/markov?amount=" + amount;
+    var url: string = "/api/v1/subreddits/" + subreddit + "/markov?amount=" + amount;
 
     request.open('GET', url, true);
     

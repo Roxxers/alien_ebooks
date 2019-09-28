@@ -8,7 +8,6 @@ app.config.from_pyfile('config.py')
 
 import praw
 from pony.flask import Pony
-from flask_restful import Api
 
 from subredditgenerator.cache import Cache
 
@@ -22,8 +21,6 @@ reddit = praw.Reddit(
 
 # Wrap all routes (except api endpoints) with db_session
 Pony(app)
-
-sub_api = Api(app)
 
 
 # Setup redis client
