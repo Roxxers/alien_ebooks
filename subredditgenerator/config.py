@@ -1,8 +1,9 @@
 	
 import os
-from os.path import join, dirname
+from os.path import dirname, join
+
 from dotenv import load_dotenv
- 
+
 # We load the env file for when the program is run from source rather than docker.
 env_file = ".env" 
 dotenv_path = join(dirname(__file__), "../", env_file)

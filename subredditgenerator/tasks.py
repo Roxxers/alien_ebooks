@@ -6,7 +6,6 @@ from pony.orm import db_session, select
 
 from subredditgenerator import app, cache, models
 
-
 with db_session:
     subreddits = select(s.name for s in models.Subreddit)[:]
     for subreddit in subreddits:

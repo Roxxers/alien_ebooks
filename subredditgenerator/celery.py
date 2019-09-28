@@ -6,8 +6,8 @@ from pony.orm import db_session, select
 
 from subredditgenerator import cache, config, models, reddit
 
-        
-        
+
+
 celery = Celery('background_tasks', broker=f"{config.REDIS_URI}0", backend=f"{config.REDIS_URI}0")
 
 

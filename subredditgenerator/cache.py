@@ -2,9 +2,9 @@
 import datetime
 import pickle
 
-from subredditgenerator import config
-
 import redis
+
+from subredditgenerator import config
 
 
 class Cache:

@@ -1,6 +1,6 @@
-from subredditgenerator import app
 from pony import orm
 
+from subredditgenerator import app
 
 db = orm.Database()
 db.bind(

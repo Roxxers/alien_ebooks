@@ -9,7 +9,6 @@ from prawcore import exceptions
 
 from subredditgenerator import app, cache, celery, markov, models, reddit
 
-
 api = Api(app)
 
 
