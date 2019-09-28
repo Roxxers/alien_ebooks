@@ -25,4 +25,4 @@ Pony(app)
 # Setup redis client
 cache = Cache(host=app.config["REDIS_HOST"], port=int(app.config["REDIS_PORT"]))
 
-from subredditgenerator import api, markov, models, routes, tasks
+from subredditgenerator import api, markov, models, routes
