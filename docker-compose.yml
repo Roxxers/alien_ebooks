@@ -26,7 +26,7 @@ services:
     build: ./
     restart: always
     env_file: .env
-    command: celery -A subredditgenerator.celery worker -l warning
+    command: celery -A subredditgenerator.celery worker -l info
     volumes:
       - ./:/usr/src/app
     depends_on:
