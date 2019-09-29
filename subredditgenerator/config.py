@@ -30,6 +30,6 @@ MEMCACHED_PORT = os.getenv("MEMCACHED_PORT")
 
 CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
 CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
-USER_AGENT = "Subreddit Generator. Source Code by u/rainbowroxxers"
+USER_AGENT = "ebooks_alien. Source Code by u/rainbowroxxers at https://github.com/roxxers/example"
 
 SCHEDULER_API_ENABLED = True
