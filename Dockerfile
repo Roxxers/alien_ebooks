@@ -1,4 +1,4 @@
-FROM python:3.7.4-buster
+FROM python:3.7.4-alpine
 LABEL maintainer="me@roxxers.xyz"
 
 # Setting up vars
@@ -9,16 +9,21 @@ ENV SUBREDDIT_USING_DOCKER=1
 ENV INSTALL_DIR=/usr/src/app
 
 # Setup OS
+# Installing build-base to use gcc for psycopg2
 # Installing libpq-dev for support of postgres db's to install python livs
 # Installing node-typescript to install typescript complier so we can compile ts later on
-RUN apt-get update -y
-RUN apt-get install -y --no-install-recommends libpq-dev node-typescript
-# Clean the cache and apt lists to save space in the image
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apk add --update build-base postgresql-dev npm 
 
+# Install typescript
+
+RUN npm i -g typescript && \
+    npm cache clean --force
+    
 # Setup Env
 # Create user to run code from rather than root
-RUN useradd --shell /bin/bash $USERNAME
+RUN adduser $USERNAME \
+    --disabled-password \
+    --gecos "" 
 
 # Then copy source to home area and cd there
 COPY . $INSTALL_DIR
