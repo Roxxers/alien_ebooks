@@ -80,7 +80,7 @@ class SubredditEndpoint(SubredditResource):
             return self.response(202, message=f"Created build task successfully for subreddit {name}", data=data)
         except exceptions.PrawcoreException:
             # Subreddit is not found
-            return self.default_404_response("Subreddit doesn' exist")
+            return self.default_404_response("Subreddit doesn't exist")
 
 
 class AllSubredditsEndpoint(SubredditResource):
