@@ -12,7 +12,7 @@ load_dotenv(dotenv_path=dotenv_path)
 USING_DOCKER = os.getenv("SUBREDDIT_USING_DOCKER")
 
 DB_ENGINE = "postgres"
-DB_HOST = "postgres" if USING_DOCKER else os.getenv('POSTGRES_HOST')
+DB_HOST = "db" if USING_DOCKER else os.getenv('POSTGRES_HOST')
 DB_USER = os.getenv("POSTGRES_USER")
 DB_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 DB_DATABASE = os.getenv("POSTGRES_DATABASE")
