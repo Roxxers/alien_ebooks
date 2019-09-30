@@ -1,18 +1,25 @@
 {
     "python.pythonPath": "venv/bin/python3.7",
     "cSpell.words": [
+        "adduser",
         "app",
         "apscheduler",
         "endblock",
         "exception",
+        "gecos",
+        "isready",
         "markovify",
+        "pg",
         "praw",
         "prawcore",
+        "psycopg",
         "rainbowroxxers",
         "rdiv",
         "reddit",
         "subreddit",
-        "subreddits"
+        "subredditgenerator",
+        "subreddits",
+        "webapp"
     ],
     "python.linting.enabled": true,
     "python.linting.pylintUseMinimalCheckers": false

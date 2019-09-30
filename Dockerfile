@@ -10,7 +10,7 @@ ENV INSTALL_DIR=/usr/src/app
 
 # Setup OS
 # Installing build-base to use gcc for psycopg2
-# Installing libpq-dev for support of postgres db's to install python livs
+# Installing libpq-dev for support of postgres db's to install python libs
 # Installing node-typescript to install typescript complier so we can compile ts later on
 RUN apk add --update build-base postgresql-dev npm 
 
