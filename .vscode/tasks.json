@@ -1,0 +1,25 @@
+{
+	"command": "${workspaceRoot}/node_modules/.bin/webpack",
+	"isShellCommand": true,
+	"args": [
+		"--display-modules",
+		"--progress"
+	],
+	"echoCommand": true,
+	"tasks": [
+		{
+			"args": [
+				"--watch"
+			],
+			"suppressTaskName": true,
+			"taskName": "webpack watch",
+			"isBuildCommand": true
+		},
+		{
+			"suppressTaskName": true,
+			"taskName": "webpack build",
+			"isBuildCommand": true,
+			"problemMatcher": []
+		}
+	]
+}
