@@ -13,7 +13,8 @@
 			],
 			"suppressTaskName": true,
 			"taskName": "webpack watch",
-			"isBuildCommand": true
+			"isBuildCommand": true,
+			"problemMatcher": []
 		},
 		{
 			"suppressTaskName": true,
