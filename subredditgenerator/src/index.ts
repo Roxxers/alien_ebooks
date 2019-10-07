@@ -1,8 +1,8 @@
 import { SubredditMarkovEndpoint } from "./api_endpoints";
 
 
-const api_root: string = "/api/v1";
-const subreddit_root: string = `${api_root}/subreddits`;
+const API_ROOT: string = "/api/v1";
+const SUBREDDIT_ROOT: string = `${API_ROOT}/subreddits`;
 
 
 function add_titles_to_html(response: SubredditMarkovEndpoint): void {
@@ -38,7 +38,7 @@ function request_titles(event: Event): void {
 
     const form: HTMLFormElement = document.forms.namedItem("sInput");
     const subreddit: string = form.sName.value;
-    const url: string = `${subreddit_root}/${subreddit}/markov?amount=10`;
+    const url: string = `${SUBREDDIT_ROOT}/${subreddit}/markov?amount=10`;
 
     const request = new XMLHttpRequest();
 
