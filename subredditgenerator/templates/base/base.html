@@ -9,7 +9,7 @@
       {% include "base/styles.html" %}
     {% endblock styles %}
     <meta charset="UTF-8">
-    <title>{% block title %}{% block page_name %}{% endblock page_name %} - Sub{% endblock title %}</title>
+    <title>{% block title %}{% block page_name %}{% endblock page_name %} - {{ info["app_name"] }}{% endblock title %}</title>
     <!-- Font Awesome script -->
     <script src="https://kit.fontawesome.com/721b70b82c.js"></script>
 {% endblock %}
@@ -19,6 +19,7 @@
 {% block body %}
   {% block content %}
   {% endblock content %}
+  {% include "base/footer.html" %}
   {% block scripts %}
   {% endblock scripts %}
 {% endblock body %}
