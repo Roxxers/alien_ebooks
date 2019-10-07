@@ -2,7 +2,7 @@
 from celery import Celery
 from pony.orm import db_session, TransactionIntegrityError
 
-from subredditgenerator import config, models, reddit
+from ebooks_alien import config, models, reddit
 
 
 celery = Celery('background_tasks', broker=f"{config.REDIS_URI}0", backend=f"{config.REDIS_URI}0")

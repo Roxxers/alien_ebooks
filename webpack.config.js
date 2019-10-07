@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './subredditgenerator/src/index.ts',
+  entry: './ebooks_alien/src/index.ts',
   module: {
     rules: [
       {
@@ -16,6 +16,6 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'subredditgenerator/static/js'),
+    path: path.resolve(__dirname, 'ebooks_alien/static/js'),
   }
 };

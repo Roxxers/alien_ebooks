@@ -2,7 +2,7 @@
 
 from flask import render_template
 
-from subredditgenerator import app
+from ebooks_alien import app
 
 
 @app.route("/")

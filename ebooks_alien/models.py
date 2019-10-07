@@ -1,6 +1,6 @@
 from pony import orm
 
-from subredditgenerator import app
+from ebooks_alien import app
 
 db = orm.Database()
 db.bind(

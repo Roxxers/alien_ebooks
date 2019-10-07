@@ -2,7 +2,7 @@ from flask_restful import Api, Resource, reqparse
 from pony.orm import db_session, select
 from prawcore import exceptions
 
-from subredditgenerator import app, cache, celery, markov, models, reddit
+from ebooks_alien import app, cache, celery, markov, models, reddit
 
 api = Api(app)
 
