@@ -20,13 +20,15 @@ services:
     volumes:
       - ./redis:/data
     ports:
-      - 127.0.0.1:6379:6379
+      - 6379:6379
 
   celery:
     build: ./
     restart: always
     env_file: .env
-    command: celery -A subredditgenerator.celery worker -l info
+    environment:
+      - EBOOKS_USING_DOCKER=1 
+    command: celery -A ebooks_alien.celery worker -l info
     volumes:
       - ./:/usr/src/app
     depends_on:
@@ -38,6 +40,8 @@ services:
       context: ./
       dockerfile: Dockerfile
     env_file: .env
+    environment:
+      - EBOOKS_USING_DOCKER=1 
     volumes:
       - ./:/usr/src/app
     ports:

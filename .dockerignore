@@ -1,3 +1,7 @@
 .env.*
 postgres
 redis
+./ebooks_alien/static/js/bundle.js
+.idea
+venv
+node_modules

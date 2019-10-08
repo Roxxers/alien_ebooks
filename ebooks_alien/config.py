@@ -13,7 +13,7 @@ env_file = ".env"
 dotenv_path = join(dirname(__file__), "../", env_file)
 load_dotenv(dotenv_path=dotenv_path)
 
-USING_DOCKER = os.getenv("SUBREDDIT_USING_DOCKER")
+USING_DOCKER = os.getenv("EBOOKS_USING_DOCKER")
 
 DB_ENGINE = "postgres"
 DB_HOST = "db" if USING_DOCKER else os.getenv('POSTGRES_HOST')
