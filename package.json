@@ -1,5 +1,5 @@
 {
-  "name": "redditgen",
+  "name": "alien_ebooks",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Roxxers/subredditgenerator.git"
+    "url": "git+https://github.com/Roxxers/alien_ebooks.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Roxxers/subredditgenerator/issues"
+    "url": "https://github.com/Roxxers/alien_ebooks/issues"
   },
-  "homepage": "https://github.com/Roxxers/subredditgenerator#readme",
+  "homepage": "https://github.com/Roxxers/alien_ebooks#readme",
   "devDependencies": {
     "@softwareventures/tslint-rules": "^0.7.1",
     "tslint": "^5.20.0"
