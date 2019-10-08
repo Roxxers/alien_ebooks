@@ -4,7 +4,7 @@ import datetime
 from flask_apscheduler import APScheduler
 from pony.orm import db_session, select
 
-from ebooks_alien import app, cache, models
+from alien_ebooks import app, cache, models
 
 
 CLEAR_CACHE_RATE = 1

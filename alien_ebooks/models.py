@@ -1,6 +1,6 @@
 from pony import orm
 
-from ebooks_alien import app
+from alien_ebooks import app
 
 db = orm.Database()
 db.bind(

@@ -28,7 +28,7 @@ services:
     env_file: .env
     environment:
       - EBOOKS_USING_DOCKER=1 
-    command: celery -A ebooks_alien.celery worker -l info
+    command: celery -A alien_ebooks.celery worker -l info
     volumes:
       - ./:/usr/src/app
     depends_on:

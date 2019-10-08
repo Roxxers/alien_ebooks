@@ -2,7 +2,7 @@
 
 from flask import render_template
 
-from ebooks_alien import app
+from alien_ebooks import app
 
 
 @app.route("/")

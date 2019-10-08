@@ -5,7 +5,7 @@ from os.path import dirname, join
 from dotenv import load_dotenv
 
 INFO = {
-    "app_name": "ebooks_alien"
+    "app_name": "alien_ebooks"
 }
 
 # We load the env file for when the program is run from source rather than docker.
