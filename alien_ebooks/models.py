@@ -10,7 +10,7 @@ db.bind(
     host=app.config["DB_HOST"],
     database=app.config["DB_DATABASE"],
     port=app.config["DB_PORT"]
-    )
+)
 
 
 class Subreddit(db.Entity):

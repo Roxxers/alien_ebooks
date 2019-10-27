@@ -18,7 +18,8 @@ RUN apk add --no-cache --update build-base postgresql-dev npm &&\
     adduser ebook --disabled-password --gecos "" &&\
     chown -R ebook /usr/src/app &&\
     npm install typescript webpack webpack-cli ts-loader &&\
-    pip install --no-cache-dir -r requirements.txt &&\
+    pip install pipenv --no-cache-dir &&\
+    pipenv install --system --deploy --ignore-pipfile &&\
     npx webpack &&\
     npm r typescript webpack webpack-cli ts-loader &&\
     npm cache clean --force &&\
@@ -28,4 +29,4 @@ RUN apk add --no-cache --update build-base postgresql-dev npm &&\
 USER ebook
 
 # Command to run webapp
-CMD ["python3", "app.py"]
+CMD ["python", "app.py"]

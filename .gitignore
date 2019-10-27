@@ -3,7 +3,7 @@
 
 *.pyc
 
-venv/
+.venv/
 
 main\.py
 

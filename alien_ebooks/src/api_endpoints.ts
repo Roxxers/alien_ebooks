@@ -2,10 +2,10 @@
 export interface SubredditEndpoint {
     response_code: number;
     message: string;
-    data: Data;
+    data: SubredditData;
 }
 
-export interface Data {
+export interface SubredditData {
     name: string;
     number_of_titles: number;
 }
@@ -19,9 +19,9 @@ export interface SubredditMarkovEndpoint {
 export interface SubredditBuildRequest {
     response_code: number;
     message: string;
-    data: Data;
+    data: BuildData;
 }
 
-export interface Data {
+export interface BuildData {
     task_id: string;
 }

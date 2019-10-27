@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "venv/bin/python3.7",
+    "python.pythonPath": "/home/roxie/Projects/Python/alien_ebooks/.venv/bin/python3.7",
     "cSpell.words": [
         "adduser",
         "app",
@@ -13,6 +13,7 @@
         "praw",
         "prawcore",
         "psycopg",
+        "pytz",
         "rainbowroxxers",
         "rdiv",
         "reddit",
@@ -22,5 +23,6 @@
         "webapp"
     ],
     "python.linting.enabled": true,
-    "python.linting.pylintUseMinimalCheckers": false
+    "python.linting.pylintUseMinimalCheckers": false,
+    "python.linting.pylintEnabled": true
 }
