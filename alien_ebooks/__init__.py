@@ -6,6 +6,7 @@ from alien_ebooks.cache import Cache
 
 # TODO: Before deploying to production, get a way to switch between development and production so that we can run a development server and a production server and not have to edit any docker files.
 # TODO: Setup logging for all parts of the server
+# TODO: Make posts have nsfw tags based on prob of servers posts being nsfw and upvotes and comments estimates
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
