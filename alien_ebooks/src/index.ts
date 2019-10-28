@@ -1,4 +1,5 @@
 import { SubredditMarkovEndpoint } from "./api_endpoints";
+require("./bulma.scss");
 
 
 const API_ROOT: string = "/api/v1";
