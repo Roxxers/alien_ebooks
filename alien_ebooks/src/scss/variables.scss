@@ -1,6 +1,7 @@
 
 // Set your brand colors
-// As hex codes */
+
+// TODO: Get a good colour scheme
 
 $color-primary-0: #852C64;	// Main Primary color */
 $color-primary-1: #C785AE;
@@ -21,9 +22,6 @@ $color-secondary-2-3: #3A1355;
 $color-secondary-2-4: #230339;
 
 
-////////////////////////////////////////////////
-// CYBORG
-////////////////////////////////////////////////
 $grey-accent:  hsl(0, 0%, 14%);
 $grey-darker:  hsl(0, 0%, 21%);
 $grey-dark:    hsl(0, 0%, 29%);
@@ -31,9 +29,9 @@ $grey:         hsl(0, 0%, 48%);
 $grey-light:   hsl(0, 0%, 71%);
 $grey-lighter: hsl(0, 0%, 86%);
 
-$primary: #2A9FD6 !default;
+$primary: $color-primary-0;
 $primary-light: lighten($primary, 10);
-$link: #3273E2;
+$link: $color-primary-2;
 
 $white: #fff;
 $white-ter:    #f5f5f5;
