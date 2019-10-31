@@ -1,4 +1,5 @@
 import { SubredditMarkovEndpoint } from "./api_endpoints";
+// tslint:disable-next-line: no-var-requires
 require("./scss/bulma.scss");
 
 
@@ -6,29 +7,50 @@ const API_ROOT: string = "/api/v1";
 const SUBREDDIT_ROOT: string = `${API_ROOT}/subreddits`;
 
 
+function createBulmaElement(tag: string, classes: string): HTMLElement {
+    const element = document.createElement(tag);
+    element.classList.add(classes);
+    return element;
+}
+
+function createMediaElement(): HTMLElement {
+    const article = createBulmaElement("article", "media");
+    const mediaContent = createBulmaElement("div", "media-content");
+    const contentWrapper = createBulmaElement("div", "content");
+    mediaContent.appendChild(contentWrapper);
+    article.appendChild(mediaContent);
+    return article;
+}
+
+function createTitleElements(titles: string[]): HTMLElement[] {
+    const articles: HTMLElement[] = [];
+    titles.forEach(title => {
+        const article = createMediaElement();
+        const contentElement = document.createElement("p");
+        contentElement.innerHTML = `<strong>${title}</strong>`;
+        article.children[0].children[0].appendChild(contentElement);
+        articles.push(article);
+    });
+    return articles;
+}
+
 function add_titles_to_html(response: SubredditMarkovEndpoint): void {
     const data: string[] = response.data;
-    const titleDiv: HTMLElement = document.getElementById("gen");
+    const titles: HTMLElement = document.getElementById("gen");
     let title: HTMLParagraphElement;
 
-    while (titleDiv.firstChild) {
-        titleDiv.removeChild(titleDiv.firstChild);
+    while (titles.firstChild) {
+        titles.removeChild(titles.firstChild);
     }
 
     if (response.data == null) {
         title = document.createElement("p");
         title.innerHTML = "404";
-        titleDiv.appendChild(title);
+        titles.appendChild(title);
+        // TODO: Update this to make more sense
     } else {
-        for (let i = 0; i < data.length; i++) {
-            title = document.createElement("p");
-            if (data[i] == null) {
-                title.innerHTML = "null";
-            } else {
-                title.innerHTML = data[i];
-            }
-            titleDiv.appendChild(title);
-        }
+        const posts = createTitleElements(data);
+        posts.forEach(title => titles.appendChild(title));
     }
 }
 
