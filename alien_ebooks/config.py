@@ -1,12 +1,10 @@
-
 import os
 from os.path import dirname, join
 
 from dotenv import load_dotenv
 
-INFO = {
-    "app_name": "alien_ebooks"
-}
+app_name = "alien_ebooks"
+INFO = {"app_name": app_name}
 
 # We load the env file for when the program is run from source rather than docker.
 env_file = ".env"
@@ -28,6 +26,6 @@ REDIS_URI = "redis://{}:{}/".format(REDIS_HOST, REDIS_PORT)
 
 CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
 CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
-USER_AGENT = "{[app_name]}. Source Code by u/rainbowroxxers at https://github.com/roxxers/example".format(INFO)
+USER_AGENT = f"{app_name}. Source Code: https://github.com/roxxers/example"
 
 SCHEDULER_API_ENABLED = True

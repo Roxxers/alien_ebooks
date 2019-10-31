@@ -22,7 +22,4 @@
         "subreddits",
         "webapp"
     ],
-    "python.linting.enabled": true,
-    "python.linting.pylintUseMinimalCheckers": false,
-    "python.linting.pylintEnabled": true
 }

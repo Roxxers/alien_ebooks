@@ -1,9 +1,7 @@
-
 import markovify
 
 
 class MarkovGenerator:
-
     def __init__(self, subreddit_entity, cache):
         self.subreddit = subreddit_entity
         self.titles = "\n".join(self.subreddit.titles.title)
@@ -16,11 +14,13 @@ class MarkovGenerator:
         return self.cache.set(self.subreddit.name, markov_chain)
 
     def _make_markov_chain(self):
-        return markovify.NewlineText(self.titles, well_formed=False, state_size=2)
+        return markovify.NewlineText(
+            self.titles, well_formed=False, state_size=2
+        )
 
     def generate_sentences(self, amount=1):
         max_amount = 20
-        amount = amount if amount <= max_amount else max_amount  # Only allow a max of 20 to be generated
+        amount = amount if amount <= max_amount else max_amount # Only allow a max of 20 to be generated
 
         cached_chain = self._get_markov_cache()
 

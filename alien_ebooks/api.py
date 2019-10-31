@@ -32,7 +32,12 @@ class SubredditMarkovEndpoint(SubredditResource):
     def get(self, name):
         # Maybe allow multiple subreddits in future
         parser = reqparse.RequestParser()
-        parser.add_argument("amount", default=1, type=int, help="Amount of markov-chain titles to return.")
+        parser.add_argument(
+            "amount",
+            default=1,
+            type=int,
+            help="Amount of markov-chain titles to return."
+        )
 
         name = name.lower()
         args = parser.parse_args()
@@ -40,7 +45,9 @@ class SubredditMarkovEndpoint(SubredditResource):
 
         if not subreddit:
             # If we can"t find the subreddit in the db, return 404
-            return self.default_404_response("Subreddit not found in our database")
+            return self.default_404_response(
+                "Subreddit not found in our database"
+            )
 
         # Found subreddit in db, created sentences from a markov chain
         gen = markov.MarkovGenerator(subreddit, cache)
@@ -56,7 +63,9 @@ class SubredditEndpoint(SubredditResource):
             subreddit = models.Subreddit.get(name=name)
 
         if not subreddit:
-            return self.default_404_response("Subreddit not found in our database")
+            return self.default_404_response(
+                "Subreddit not found in our database"
+            )
 
         data = {
             "name": subreddit.name,
@@ -74,10 +83,12 @@ class SubredditEndpoint(SubredditResource):
             _ = subreddit.subscribers
 
             task = celery.add_titles_to_db.delay(name)
-            data = {
-                "task_id": task.id
-            }
-            return self.response(202, message=f"Created build task successfully for subreddit {name}", data=data)
+            data = {"task_id": task.id}
+            return self.response(
+                202,
+                message=f"Created build task successfully for subreddit {name}",
+                data=data
+            )
         except exceptions.PrawcoreException:
             # Subreddit is not found
             return self.default_404_response("Subreddit doesn't exist")
@@ -96,9 +107,11 @@ class BuildTaskEndpoint(SubredditResource):
         # Get task from queue
         task = celery.add_titles_to_db.AsyncResult(task_id)
 
-        if not task.info:  
+        if not task.info:
             # If task does not exist
-            return self.default_404_response("Could not find task with that ID")
+            return self.default_404_response(
+                "Could not find task with that ID"
+            )
 
         if task.state == "PENDING":
             # job did not start yet
@@ -119,7 +132,7 @@ class BuildTaskEndpoint(SubredditResource):
             # something went wrong in the background job
             data = {
                 "state": task.state,
-                "status": str(task.info),  # this is the exception raised
+                "status": str(task.info), # this is the exception raised
             }
             return self.response(500, message="Task has failed.", data=data)
         return self.response(200, data=data)
@@ -129,5 +142,7 @@ API_BASE = "/api/v1"
 
 api.add_resource(AllSubredditsEndpoint, f"{API_BASE}/subreddits/")
 api.add_resource(SubredditEndpoint, f"{API_BASE}/subreddits/<name>")
-api.add_resource(SubredditMarkovEndpoint, f"{API_BASE}/subreddits/<name>/markov")
+api.add_resource(
+    SubredditMarkovEndpoint, f"{API_BASE}/subreddits/<name>/markov"
+)
 api.add_resource(BuildTaskEndpoint, f"{API_BASE}/tasks/<task_id>")

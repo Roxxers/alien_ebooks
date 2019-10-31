@@ -1,4 +1,3 @@
-
 import datetime
 import pickle
 
@@ -25,7 +24,7 @@ class Cache:
 
     def _str_to_dt(self, str_obj):
         if isinstance(str_obj, bytes):
-            str_obj = str(str_obj, "UTF-8")  # Make sure this is a string
+            str_obj = str(str_obj, "UTF-8") # Make sure this is a string
         dt = datetime.datetime.strptime(str_obj, self.datetime_str)
         return dt
 

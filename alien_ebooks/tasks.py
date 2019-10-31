@@ -1,11 +1,9 @@
-
 import datetime
 
 from flask_apscheduler import APScheduler
 from pony.orm import db_session, select
 
 from alien_ebooks import app, cache, models
-
 
 CLEAR_CACHE_RATE = 1
 HOURS_TO_STORE_CACHE = 6
@@ -17,7 +15,12 @@ scheduler.init_app(app)
 scheduler.start()
 
 
-@scheduler.task('interval', id='clear_cache', hours=CLEAR_CACHE_RATE, misfire_grace_time=900)
+@scheduler.task(
+    'interval',
+    id='clear_cache',
+    hours=CLEAR_CACHE_RATE,
+    misfire_grace_time=900
+)
 def clean_cache():
     now = datetime.datetime.utcnow()
     with db_session:
@@ -31,6 +34,7 @@ def clean_cache():
             if (now - value) > datetime.timedelta(hours=HOURS_TO_STORE_CACHE):
                 cache.delete(subreddit)
                 cache.accesslog_delete(subreddit)
+
 
 @db_session
 def delete_former_session_cache():
