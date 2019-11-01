@@ -9,15 +9,27 @@ const SUBREDDIT_ROOT: string = `${API_ROOT}/subreddits`;
 
 function createBulmaElement(tag: string, classes: string): HTMLElement {
     const element = document.createElement(tag);
-    element.classList.add(classes);
+    const classList = classes.split(" ");
+    classList.forEach(cssClass => {
+        element.classList.add(cssClass);
+    });
     return element;
 }
 
 function createMediaElement(): HTMLElement {
+    // Base Element
     const article = createBulmaElement("article", "media");
+    // Media-left, image placeholder
+    const mediaImage = createBulmaElement("div", "media-left");
+    const image = createBulmaElement("img", "image is-64x64") as HTMLImageElement;
+    image.src = "https://bulma.io/images/placeholders/128x128.png";
+    mediaImage.appendChild(image);
+    // Media Content
     const mediaContent = createBulmaElement("div", "media-content");
     const contentWrapper = createBulmaElement("div", "content");
     mediaContent.appendChild(contentWrapper);
+    // Add all elements to base element
+    article.appendChild(mediaImage);
     article.appendChild(mediaContent);
     return article;
 }
@@ -27,8 +39,11 @@ function createTitleElements(titles: string[]): HTMLElement[] {
     titles.forEach(title => {
         const article = createMediaElement();
         const contentElement = document.createElement("p");
-        contentElement.innerHTML = `<strong>${title}</strong>`;
-        article.children[0].children[0].appendChild(contentElement);
+        contentElement.innerHTML = `<strong>${title}</strong>
+        <br><span class="has-text-grey is-size-7"><strong>r/subredditexample</strong> by u/exampleuser
+        <br><i class="fas fa-comment-alt"></i></span>`;
+        const mediaContent = article.getElementsByClassName("media-content");
+        mediaContent[0].children[0].appendChild(contentElement);
         articles.push(article);
     });
     return articles;
@@ -36,7 +51,7 @@ function createTitleElements(titles: string[]): HTMLElement[] {
 
 function add_titles_to_html(response: SubredditMarkovEndpoint): void {
     const data: string[] = response.data;
-    const titles: HTMLElement = document.getElementById("gen");
+    const titles: HTMLElement = document.getElementById("GeneratedPosts");
     let title: HTMLParagraphElement;
 
     while (titles.firstChild) {
