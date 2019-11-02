@@ -54,7 +54,6 @@ class SubredditMarkovEndpoint(SubredditResource):
         if not subreddit:
             # If we can"t find the subreddit in the db, return 404
             return self.default_404_response(
-                # FIXME: This shouldn't 404, needs to be a 203?
                 "Subreddit not found in our database"
             )
 
@@ -89,11 +88,16 @@ class SubredditEndpoint(SubredditResource):
 
     def post(self, name):
         name = name.lower()
-        # TODO: Add check to see if subreddit already exists
+        with db_session:
+            entity = models.Subreddit.get(name=name)
+            if entity:
+                return self.response(
+                    409, message="Subreddit already exists in database."
+                )
 
         try:
             subreddit = reddit.subreddit(name)
-            # This line does nothing but try and bait the exception out so we can return a 404 if it is not a real subreddit
+            # bait the exception out so we can return a 404 if it is not a real subreddit
             _ = subreddit.subscribers
 
             task = celery.add_titles_to_db.delay(name)
