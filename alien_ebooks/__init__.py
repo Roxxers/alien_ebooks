@@ -6,7 +6,7 @@ from alien_ebooks.cache import Cache
 
 # TODO: Before deploying to production, get a way to switch between development and production so that we can run a development server and a production server and not have to edit any docker files.
 # TODO: Setup logging for all parts of the server
-# TODO: Make posts have nsfw tags based on prob of servers posts being nsfw and upvotes and comments estimates
+# TODO: Download fontawesome svgs and attrib
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -22,8 +22,9 @@ reddit = praw.Reddit(
 # Wrap all routes (except api endpoints) with db_session
 Pony(app)
 
-
 # Setup redis client
-cache = Cache(host=app.config["REDIS_HOST"], port=int(app.config["REDIS_PORT"]))
+cache = Cache(
+    host=app.config["REDIS_HOST"], port=int(app.config["REDIS_PORT"])
+)
 
 from alien_ebooks import api, markov, models, routes, tasks
