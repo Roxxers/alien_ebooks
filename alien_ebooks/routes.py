@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""Web server route mapping"""
+
 from flask import render_template
 
 from alien_ebooks import app
@@ -21,4 +23,5 @@ from alien_ebooks import app
 
 @app.route("/")
 def index():
+    """index - renders index page"""
     return render_template("index.html", info=app.config["INFO"])

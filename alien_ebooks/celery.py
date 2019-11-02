@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""Celery module for tasks to be run in the background for the web app."""
+
 from celery import Celery
 from pony.orm import db_session, TransactionIntegrityError
 
@@ -29,6 +31,11 @@ celery = Celery(
 @celery.task(bind=True)
 @db_session
 def add_titles_to_db(self, subreddit_name: str):
+    """add_titles_to_db - scrapes a subreddit and posts to the database
+
+    Args:
+        subreddit_name (str): name of subreddit to add posts from
+    """
     # TODO: Add debug code here
     self.update_state(
         state="STARTED", meta={'status': "Started requesting data..."}

@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""Generates procedural posts, using markov chains and other methods."""
+
 import random
 
 import markovify
@@ -49,7 +51,7 @@ class MarkovGenerator:
             chain = cached_chain
 
         posts = []
-        for x in range(amount):
+        for _ in range(amount):
             title = chain.make_sentence()
             no_comments = [
                 title.number_of_comments for title in self.subreddit.titles

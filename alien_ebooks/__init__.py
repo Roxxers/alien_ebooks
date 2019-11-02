@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""alien_ebooks"""
+
 import praw
 from flask import Flask
 from pony.flask import Pony

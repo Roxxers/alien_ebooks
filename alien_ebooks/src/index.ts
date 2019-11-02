@@ -22,7 +22,12 @@ require("./scss/bulma.scss");
 const API_ROOT: string = "/api/v1";
 const SUBREDDIT_ROOT: string = `${API_ROOT}/subreddits`;
 
-
+/**
+ * Creates element that fits with the bulma framework
+ * @param tag - html tag for element
+ * @param classes - list of space seperated classes to add to the element
+ * @returns Bulma HTML Element
+ */
 function createBulmaElement(tag: string, classes: string): HTMLElement {
     const element = document.createElement(tag);
     const classList = classes.split(" ");
@@ -32,6 +37,11 @@ function createBulmaElement(tag: string, classes: string): HTMLElement {
     return element;
 }
 
+/**
+ * Creates a Bulma Media element.
+ * This is used for generated posts.
+ * @returns Bulma Media element
+ */
 function createMediaElement(): HTMLElement {
     // Base Element
     const article = createBulmaElement("article", "media");
@@ -50,6 +60,11 @@ function createMediaElement(): HTMLElement {
     return article;
 }
 
+/**
+ * Creates post elements from api results
+ * @param posts - markov posts from the api
+ * @returns list of media objects
+ */
 function createTitleElements(posts: MarkovPost[]): HTMLElement[] {
     const articles: HTMLElement[] = [];
     posts.forEach(post => {
@@ -73,6 +88,12 @@ function createTitleElements(posts: MarkovPost[]): HTMLElement[] {
     return articles;
 }
 
+
+/**
+ * Add posts to the page.
+ * Removes posts from previous requests if they exist.
+ * @param response - API response object to use the posts from
+ */
 function add_titles_to_html(response: SubredditMarkovEndpoint): void {
     const data: MarkovPost[] = response.data;
     const titles: HTMLElement = document.getElementById("GeneratedPosts");
@@ -94,14 +115,17 @@ function add_titles_to_html(response: SubredditMarkovEndpoint): void {
     }
 }
 
-// Wrapper function to prevent the default submit and run the get_titles function
+/**
+ * Listener function to make api request and add markov posts to the page
+ * @param event - event this function is listening on
+ */
 function request_titles(event: Event): void {
     const button = document.getElementById("SubredditSubmitButton") as HTMLButtonElement;
     button.disabled = true;
 
     const form: HTMLFormElement = document.forms.namedItem("sInput");
     const subreddit: string = form.sName.value;
-    const url: string = `${SUBREDDIT_ROOT}/${subreddit}/markov?amount=10`;
+    const url: string = `${SUBREDDIT_ROOT}/${subreddit}/markov?amount=5`;
 
     const request = new XMLHttpRequest();
 
@@ -119,7 +143,4 @@ function request_titles(event: Event): void {
 
 // Get subreddit form
 const form: HTMLElement = document.getElementById("subreddit_request_form");
-
-// attach event listener
 form.addEventListener("submit", request_titles, true);
-

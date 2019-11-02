@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""APScheduler tasks for running scheduled background tasks."""
+
 import datetime
 
 from flask_apscheduler import APScheduler
@@ -21,7 +23,7 @@ from pony.orm import db_session, select
 
 from alien_ebooks import app, cache, models
 
-CLEAR_CACHE_RATE = 1
+CLEAR_RATE = 1
 HOURS_TO_STORE_CACHE = 6
 
 # Setup APScheduler and make it flask compatible
@@ -32,12 +34,10 @@ scheduler.start()
 
 
 @scheduler.task(
-    'interval',
-    id='clear_cache',
-    hours=CLEAR_CACHE_RATE,
-    misfire_grace_time=900
+    'interval', id='clear_cache', hours=CLEAR_RATE, misfire_grace_time=900
 )
 def clean_cache():
+    """clean_cache - checks cache and clears data that has exceeded the maximum amount of time in the cache."""
     now = datetime.datetime.utcnow()
     with db_session:
         subreddits = select(s.name for s in models.Subreddit)[:]
@@ -54,6 +54,7 @@ def clean_cache():
 
 @db_session
 def delete_former_session_cache():
+    """delete_former_session_cache - deletes redis db data from previous sessions"""
     subreddits = select(s.name for s in models.Subreddit)[:]
     for subreddit in subreddits:
         cache.delete(subreddit)

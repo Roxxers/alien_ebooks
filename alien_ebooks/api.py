@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""RESTful api for webserver."""
+
 from flask_restful import Api, Resource, reqparse
 from pony.orm import db_session, select
 from prawcore import exceptions
@@ -21,6 +23,8 @@ from prawcore import exceptions
 from alien_ebooks import app, cache, celery, markov, models, reddit
 
 api = Api(app)
+
+# TODO: API Docs
 
 
 class SubredditResource(Resource):

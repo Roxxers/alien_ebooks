@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+"""Models for database ORM"""
+
 from pony import orm
 
 from alien_ebooks import app
@@ -30,6 +32,9 @@ db.bind(
 
 
 class Subreddit(db.Entity):
+    """
+    Subreddit - Entity for a single subreddit
+    """
     id = orm.PrimaryKey(int)
     name = orm.Required(str, unique=True)
     titles = orm.Set("Titles")
@@ -37,6 +42,9 @@ class Subreddit(db.Entity):
 
 
 class Titles(db.Entity):
+    """
+    Titles - Entity for a reddit submission
+    """
     id = orm.PrimaryKey(int)
     subreddit = orm.Required(Subreddit)
     title = orm.Required(str)
