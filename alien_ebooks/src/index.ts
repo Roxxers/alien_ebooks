@@ -25,7 +25,7 @@ const SUBREDDIT_ROOT: string = `${API_ROOT}/subreddits`;
 /**
  * Creates element that fits with the bulma framework
  * @param tag - html tag for element
- * @param classes - list of space seperated classes to add to the element
+ * @param classes - list of space separated classes to add to the element
  * @returns Bulma HTML Element
  */
 function createBulmaElement(tag: string, classes: string): HTMLElement {
