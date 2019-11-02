@@ -1,4 +1,4 @@
-import { SubredditMarkovEndpoint } from "./api_endpoints";
+import { MarkovPost, SubredditMarkovEndpoint } from "./endpoints";
 // tslint:disable-next-line: no-var-requires
 require("./scss/bulma.scss");
 
@@ -34,14 +34,22 @@ function createMediaElement(): HTMLElement {
     return article;
 }
 
-function createTitleElements(titles: string[]): HTMLElement[] {
+function createTitleElements(posts: MarkovPost[]): HTMLElement[] {
     const articles: HTMLElement[] = [];
-    titles.forEach(title => {
+    posts.forEach(post => {
         const article = createMediaElement();
         const contentElement = document.createElement("p");
-        contentElement.innerHTML = `<strong>${title}</strong>
-        <br><span class="has-text-grey is-size-7"><strong>r/subredditexample</strong> by u/exampleuser
-        <br><i class="fas fa-comment-alt"></i></span>`;
+
+        let title = `<strong>${post.title}</strong>`;
+        if (post.nsfw) {
+            title += ` <span class="nsfw">NSFW</span>`;
+        }
+
+        const postMetaLine = `<span class="has-text-grey is-size-7"><strong>r/${post.subreddit}</strong> by u/exampleuser`;
+        const commentsCounter = `<i class="fas fa-comment-alt"></i> ${post.comments} Comments</span>`;
+
+
+        contentElement.innerHTML = `${title}<br>${postMetaLine}<br>${commentsCounter}`;
         const mediaContent = article.getElementsByClassName("media-content");
         mediaContent[0].children[0].appendChild(contentElement);
         articles.push(article);
@@ -50,7 +58,7 @@ function createTitleElements(titles: string[]): HTMLElement[] {
 }
 
 function add_titles_to_html(response: SubredditMarkovEndpoint): void {
-    const data: string[] = response.data;
+    const data: MarkovPost[] = response.data;
     const titles: HTMLElement = document.getElementById("GeneratedPosts");
     let title: HTMLParagraphElement;
 
@@ -66,6 +74,7 @@ function add_titles_to_html(response: SubredditMarkovEndpoint): void {
     } else {
         const posts = createTitleElements(data);
         posts.forEach(title => titles.appendChild(title));
+        // TODO: Deal with null title objects
     }
 }
 

@@ -11,9 +11,9 @@ subredditgen\.conf
 
 .env
 
-postgres
+.postgres
 
-redis
+.redis
 
 *.js
 

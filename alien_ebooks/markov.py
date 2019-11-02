@@ -1,3 +1,5 @@
+import random
+
 import markovify
 
 
@@ -30,4 +32,20 @@ class MarkovGenerator:
         else:
             chain = cached_chain
 
-        return [chain.make_sentence() for x in range(amount)]
+        posts = []
+        for x in range(amount):
+            title = chain.make_sentence()
+            no_comments = [
+                title.number_of_comments for title in self.subreddit.titles
+            ]
+            comments = random.randint(min(no_comments), max(no_comments))
+            is_nsfw = bool(self.subreddit.nsfw_percentage > random.random())
+            post = {
+                "title": title,
+                "comments": comments,
+                "nsfw": is_nsfw,
+                "subreddit": self.subreddit.name
+            }
+            posts.append(post)
+
+        return posts

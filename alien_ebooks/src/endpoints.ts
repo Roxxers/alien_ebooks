@@ -1,4 +1,7 @@
 
+export interface hewwo {
+}
+
 export interface SubredditEndpoint {
     response_code: number;
     message: string;
@@ -10,10 +13,21 @@ export interface SubredditData {
     number_of_titles: number;
 }
 
+export interface MarkovPost {
+    title: string;
+    comments: number;
+    nsfw: boolean;
+    subreddit: string;
+}
+
 export interface SubredditMarkovEndpoint {
     response_code: number;
     message: string;
-    data: string[];
+    data: MarkovPost[];
+}
+
+export interface BuildData {
+    task_id: string;
 }
 
 export interface SubredditBuildRequest {
@@ -22,6 +36,3 @@ export interface SubredditBuildRequest {
     data: BuildData;
 }
 
-export interface BuildData {
-    task_id: string;
-}

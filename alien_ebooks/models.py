@@ -15,14 +15,17 @@ db.bind(
 
 class Subreddit(db.Entity):
     id = orm.PrimaryKey(int)
-    name = orm.Required(str)
+    name = orm.Required(str, unique=True)
     titles = orm.Set("Titles")
+    nsfw_percentage = orm.Optional(float)
 
 
 class Titles(db.Entity):
     id = orm.PrimaryKey(int)
     subreddit = orm.Required(Subreddit)
     title = orm.Required(str)
+    number_of_comments = orm.Required(int)
+    nsfw = orm.Required(bool)
 
 
 db.generate_mapping(create_tables=True)

@@ -26,6 +26,14 @@ class SubredditResource(Resource):
     def default_404_response(self, message):
         return self.response(404, message=message)
 
+    @staticmethod
+    def gen_nsfw_per(subreddit):
+        with db_session:
+            is_nsfw_list = [title.nsfw for title in subreddit.titles]
+            per = is_nsfw_list.count(True) / len(is_nsfw_list)
+            subreddit.nsfw_percentage = per
+        return subreddit
+
 
 class SubredditMarkovEndpoint(SubredditResource):
     @db_session
@@ -46,8 +54,12 @@ class SubredditMarkovEndpoint(SubredditResource):
         if not subreddit:
             # If we can"t find the subreddit in the db, return 404
             return self.default_404_response(
+                # FIXME: This shouldn't 404, needs to be a 203?
                 "Subreddit not found in our database"
             )
+
+        if not subreddit.nsfw_percentage:
+            subreddit = self.gen_nsfw_per(subreddit)
 
         # Found subreddit in db, created sentences from a markov chain
         gen = markov.MarkovGenerator(subreddit, cache)
@@ -66,6 +78,8 @@ class SubredditEndpoint(SubredditResource):
             return self.default_404_response(
                 "Subreddit not found in our database"
             )
+        if not subreddit.nsfw_percentage:
+            subreddit = self.gen_nsfw_per(subreddit)
 
         data = {
             "name": subreddit.name,
