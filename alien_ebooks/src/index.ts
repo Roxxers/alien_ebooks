@@ -47,8 +47,8 @@ function createMediaElement(): HTMLElement {
     const article = createBulmaElement("article", "media");
     // Media-left, image placeholder
     const mediaImage = createBulmaElement("div", "media-left");
-    const image = createBulmaElement("img", "image is-64x64") as HTMLImageElement;
-    image.src = "https://bulma.io/images/placeholders/128x128.png";
+    const image = createBulmaElement("div", "placeholder");
+    image.innerHTML = `<i class="fas fa-quote-left placeholder-icon"></i>`;
     mediaImage.appendChild(image);
     // Media Content
     const mediaContent = createBulmaElement("div", "media-content");

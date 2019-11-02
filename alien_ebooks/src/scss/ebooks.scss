@@ -27,3 +27,13 @@
     padding-top: calc(0.2em - 1px);
     font-size: 0.6em;
 }
+
+.placeholder {
+    width: 64px;
+    height: 64px;
+    border-radius: 4px;
+    text-align: center;
+    padding: 19px 0;
+    background-color: rgba(255,255,255,0.1);
+    color: $grey-light
+}
