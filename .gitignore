@@ -24,3 +24,11 @@ node_modules/
 !webpack.config.js
 
 *.css
+
+*.svg
+
+*.woff*
+
+*.eot
+
+*.ttf

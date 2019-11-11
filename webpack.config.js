@@ -11,6 +11,15 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?.*$|$)/,
+        loader: 'file-loader',
+        options: {
+          path: path.resolve(__dirname, 'alien_ebooks/static'),
+          outputPath: 'fonts/',
+          name: "[name].[ext]"
+        }
+      },
+      {
         test: /\.scss$/,
         use: [
             MiniCssExtractPlugin.loader,
@@ -37,7 +46,8 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/bulma.css'
+      // Don't ask why but due to fontawesome, this has to be in root static dir
+      filename: 'bulma.css'
     }),
   ]
 };

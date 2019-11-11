@@ -17,9 +17,15 @@
 @charset "utf-8";
 
 @import "./variables.scss";
-@import "../../../node_modules/bulma/bulma.sass";
+@import "~bulma/bulma.sass";
 @import "./overrides.scss";
 @import "./ebooks.scss";
+
+// Set variable for webfont location
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
 
 // TODO: Atribb cyborg author
 //@import "../../node_modules/bulma-ribbon/src/sass/index.sass";

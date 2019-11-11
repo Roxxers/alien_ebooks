@@ -17,8 +17,7 @@
 import { createTitleElements } from "./elements";
 import { MarkovPost, SubredditMarkovEndpoint } from "./endpoints";
 
-// tslint:disable-next-line: no-var-requires
-require("./scss/bulma.scss");
+import "./scss/bulma.scss";
 
 
 const API_ROOT: string = "/api/v1";
