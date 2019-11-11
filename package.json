@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/Roxxers/alien_ebooks#readme",
   "devDependencies": {
-    "@softwareventures/tslint-rules": "^0.7.1"
+    "@softwareventures/tslint-rules": "^0.7.1",
+    "webpack-bundle-analyzer": "^3.6.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",

@@ -1,8 +1,9 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+
 module.exports = {
-  entry: './alien_ebooks/src/index.ts',
+  entry: './alien_ebooks/src/ts/index.ts',
   module: {
     rules: [
       {
@@ -16,7 +17,7 @@ module.exports = {
         options: {
           path: path.resolve(__dirname, 'alien_ebooks/static'),
           outputPath: 'fonts/',
-          name: "[name].[ext]"
+          name: "[hash].[ext]"
         }
       },
       {
@@ -48,6 +49,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Don't ask why but due to fontawesome, this has to be in root static dir
       filename: 'bulma.css'
-    }),
+    })
   ]
 };

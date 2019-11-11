@@ -17,7 +17,7 @@
 import { createTitleElements } from "./elements";
 import { MarkovPost, SubredditMarkovEndpoint } from "./endpoints";
 
-import "./scss/bulma.scss";
+import "../sass/bulma.scss";
 
 
 const API_ROOT: string = "/api/v1";
