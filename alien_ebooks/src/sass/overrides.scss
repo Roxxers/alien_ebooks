@@ -110,3 +110,15 @@
 .input, .textarea, .select {
   color: #000;
 }
+
+// Sticky footer code
+
+.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-content {
+  flex: 1;
+}

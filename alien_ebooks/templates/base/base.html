@@ -15,11 +15,13 @@
 {% endblock %}
 </head>
 
-<body>
+<body class="site">
 {% block body %}
   {% include "base/header.html" %}
-  {% block content %}
-  {% endblock content %}
+  <div class="site-content">
+    {% block content %}
+    {% endblock content %}
+  </div>
   {% include "base/footer.html" %}
   {% block scripts %}
   {% endblock scripts %}
