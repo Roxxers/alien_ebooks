@@ -37,3 +37,16 @@
     background-color: rgba(255,255,255,0.1);
     color: $grey-light
 }
+
+// Sticky footer code
+
+.site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+  
+.site-content {
+    flex: 1;
+}
+  
