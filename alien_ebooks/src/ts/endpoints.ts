@@ -14,15 +14,39 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-export interface SubredditEndpoint {
+
+/**
+ * BaseResponse of all api endpoints.
+ */
+interface BaseResponse {
     response_code: number;
     message: string;
+}
+
+/**
+ * Endpoint for /subreddits/
+ */
+export interface Subreddits extends BaseResponse {
+    data: SubredditData[];
+}
+
+/**
+ * Endpoint for /subreddits/<subreddit>
+ */
+export interface SubredditEndpoint extends BaseResponse {
     data: SubredditData;
 }
 
 export interface SubredditData {
     name: string;
     number_of_titles: number;
+}
+
+/**
+ * Endpoint for /subreddits/<subreddit>/markov
+ */
+export interface SubredditMarkovEndpoint extends BaseResponse {
+    data: MarkovPost[];
 }
 
 export interface MarkovPost {
@@ -32,19 +56,13 @@ export interface MarkovPost {
     subreddit: string;
 }
 
-export interface SubredditMarkovEndpoint {
-    response_code: number;
-    message: string;
-    data: MarkovPost[];
+/**
+ * Endpoint for /tasks/<task_id>
+ */
+export interface SubredditBuildRequest extends BaseResponse {
+    data: BuildData;
 }
 
 export interface BuildData {
     task_id: string;
 }
-
-export interface SubredditBuildRequest {
-    response_code: number;
-    message: string;
-    data: BuildData;
-}
-
