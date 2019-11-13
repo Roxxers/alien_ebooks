@@ -4,14 +4,14 @@
 
 <head>
 {% block head %}
-
-    {% block styles %}
-      {% include "base/styles.html" %}
-    {% endblock styles %}
-    <meta charset="UTF-8">
-    <title>{% block title %}{% block page_name %}{% endblock page_name %} - {{ info["app_name"] }}{% endblock title %}</title>
-    <!-- Font Awesome script -->
-    <!-- <script src="https://kit.fontawesome.com/721b70b82c.js"></script> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block styles %}
+    {% include "base/styles.html" %}
+  {% endblock styles %}
+  <meta charset="UTF-8">
+  <title>{% block title %}{% block page_name %}{% endblock page_name %} - {{ info["app_name"] }}{% endblock title %}</title>
+  <!-- Font Awesome script -->
+  <!-- <script src="https://kit.fontawesome.com/721b70b82c.js"></script> -->
 {% endblock %}
 </head>
 

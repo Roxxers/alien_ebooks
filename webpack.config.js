@@ -48,7 +48,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       // Don't ask why but due to fontawesome, this has to be in root static dir
-      filename: 'bulma.css'
+      filename: 'bundle.css'
     })
   ]
 };

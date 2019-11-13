@@ -9,7 +9,10 @@
 	"tasks": [
 		{
 			"args": [
-				"--watch"
+				"--watch",
+				"--optimize-minimize",
+				"--mode",
+				"production"
 			],
 			"suppressTaskName": true,
 			"taskName": "webpack watch",
@@ -17,6 +20,11 @@
 			"problemMatcher": []
 		},
 		{
+			"args": [				
+				"--mode",
+				"production",
+				"--optimize-minimize"
+			],
 			"suppressTaskName": true,
 			"taskName": "webpack build",
 			"isBuildCommand": true,
