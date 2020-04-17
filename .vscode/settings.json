@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/roxie/Projects/Python/alien_ebooks/.venv/bin/python3.7",
+    "python.pythonPath": ".venv/bin/python",
     "cSpell.words": [
         "adduser",
         "app",

@@ -19,5 +19,3 @@ Flask = "*"
 Flask-RESTful = "*"
 Flask-APScheduler = "*"
 
-[requires]
-python_version = "3.7"
