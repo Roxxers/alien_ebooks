@@ -7,7 +7,7 @@ import { MarkovPost } from "./endpoints";
  * @param classes - list of space separated classes to add to the element
  * @returns Bulma HTML Element
  */
-export function createElementWithClasses(tag: string, classes: string): HTMLElement {
+function createElementWithClasses(tag: string, classes: string): HTMLElement {
     const element = document.createElement(tag);
     const classList = classes.split(" ");
     classList.forEach(cssClass => {
@@ -21,13 +21,13 @@ export function createElementWithClasses(tag: string, classes: string): HTMLElem
  * This is used for generated posts.
  * @returns Bulma Media element
  */
-export function createMediaElement(): HTMLElement {
+function createMediaElement(): HTMLElement {
     // Base Element
     const article = createElementWithClasses("article", "media");
     // Media-left, image placeholder
     const mediaImage = createElementWithClasses("div", "media-left");
     const image = createElementWithClasses("div", "placeholder");
-    image.innerHTML = `<i class="fas fa-quote-left placeholder-icon"></i>`;
+    image.innerHTML = `<span class="icon"><i class="fas fa-quote-left placeholder-icon"></i></span>`;
     mediaImage.appendChild(image);
     // Media Content
     const mediaContent = createElementWithClasses("div", "media-content");
@@ -56,7 +56,7 @@ export function createTitleElements(posts: MarkovPost[]): HTMLElement[] {
         }
 
         const postMetaLine = `<span class="has-text-grey is-size-7"><strong>r/${post.subreddit}</strong> by u/exampleuser`;
-        const commentsCounter = `<i class="fas fa-comment-alt"></i> ${post.comments} Comments</span>`;
+        const commentsCounter = `<span class="icon"><i class="fas fa-comment-alt"></i></span> ${post.comments} Comments</span>`;
 
 
         contentElement.innerHTML = `${title}<br>${postMetaLine}<br>${commentsCounter}`;

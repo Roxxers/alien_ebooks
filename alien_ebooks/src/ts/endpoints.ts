@@ -57,7 +57,7 @@ export interface MarkovPost {
 }
 
 /**
- * Endpoint for /tasks/<task_id>
+ * Endpoint for created request
  */
 export interface SubredditBuildRequest extends BaseResponse {
     data: BuildData;
@@ -65,4 +65,15 @@ export interface SubredditBuildRequest extends BaseResponse {
 
 export interface BuildData {
     task_id: string;
+}
+
+export interface TaskResponse extends BaseResponse {
+    data: TaskData;
+}
+
+export interface TaskData {
+    state: string;
+    status: string;
+    current?: number;
+    total?: number;
 }
