@@ -16,11 +16,13 @@
 
 """RESTful api for webserver."""
 
+from flask import request
 from flask_restful import Api, Resource, reqparse
+
 from pony.orm import db_session, select
 from prawcore import exceptions
 
-from alien_ebooks import app, cache, celery, markov, models, reddit
+from alien_ebooks import app, cache, celery, markov, models, reddit, socketio
 
 api = Api(app)
 
@@ -111,6 +113,7 @@ class SubredditEndpoint(SubredditResource):
         with db_session:
             entity = models.Subreddit.get(name=name)
             if entity:
+                # TODO: Need to do celery queue task_id caching to check against so that if a subreddit it being gen'd we won't try it again.
                 return self.response(
                     409, message="Subreddit already exists in database."
                 )

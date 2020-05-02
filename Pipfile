@@ -18,4 +18,4 @@ redis = "*"
 Flask = "*"
 Flask-RESTful = "*"
 Flask-APScheduler = "*"
-
+flask-socketio = "*"

@@ -16,6 +16,7 @@
 
 """Celery module for tasks to be run in the background for the web app."""
 
+import time
 from celery import Celery
 from pony.orm import db_session, TransactionIntegrityError
 
@@ -38,7 +39,11 @@ def add_titles_to_db(self, subreddit_name: str):
     """
     # TODO: Add debug code here
     self.update_state(
-        state="STARTED", meta={'status': "Started requesting data..."}
+        state="STARTED",
+        meta={
+            'status': "Started requesting data...",
+            "subreddit": subreddit_name
+        }
     )
     subreddit = reddit.subreddit(subreddit_name)
     try:
@@ -49,7 +54,8 @@ def add_titles_to_db(self, subreddit_name: str):
             "status": "Processing data",
             "total": amount_of_posts,
             "current": processed,
-            "finished": False
+            "finished": False,
+            "subreddit": subreddit_name
         }
         self.update_state(state="PROCESSING", meta=meta)
 
@@ -71,6 +77,8 @@ def add_titles_to_db(self, subreddit_name: str):
             self.update_state(state="PROCESSING", meta=meta)
         meta["finished"] = True
         self.update_state(state="FINISHED", meta=meta)
+        # Added sleep to give client's time to see that the task is completed before it is deleted from the queue.
+        time.sleep(5)
 
     except TransactionIntegrityError as e:
         # TODO: Add logging error here

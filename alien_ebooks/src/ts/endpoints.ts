@@ -76,4 +76,5 @@ export interface TaskData {
     status: string;
     current?: number;
     total?: number;
+    subreddit: string;
 }

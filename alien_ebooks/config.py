@@ -46,4 +46,6 @@ CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
 CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
 USER_AGENT = f"{app_name}. Source Code: https://github.com/roxxers/example"
 
+SECRET = os.getenv("SERVER_SECRET")
+
 SCHEDULER_API_ENABLED = True

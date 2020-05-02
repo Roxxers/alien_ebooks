@@ -19,6 +19,7 @@
 import praw
 from flask import Flask
 from pony.flask import Pony
+from flask_socketio import SocketIO
 
 from alien_ebooks.cache import Cache
 
@@ -40,9 +41,11 @@ reddit = praw.Reddit(
 # Wrap all routes (except api endpoints) with db_session
 Pony(app)
 
+socketio = SocketIO(app)
+
 # Setup redis client
 cache = Cache(
     host=app.config["REDIS_HOST"], port=int(app.config["REDIS_PORT"])
 )
 
-from alien_ebooks import api, markov, models, routes, tasks
+from alien_ebooks import api, markov, models, routes, tasks, sockets

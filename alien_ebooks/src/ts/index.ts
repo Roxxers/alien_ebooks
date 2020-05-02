@@ -15,14 +15,54 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import { createTitleElements } from "./elements";
-import { MarkovPost, SubredditMarkovEndpoint, SubredditBuildRequest, TaskResponse } from "./endpoints";
+import { MarkovPost, SubredditBuildRequest, SubredditMarkovEndpoint, TaskData } from "./endpoints";
 
 import "../sass/bulma.scss";
+
+import io from "socket.io-client";
 
 
 const API_ROOT: string = "/api/v1";
 const SUBREDDIT_ROOT: string = `${API_ROOT}/subreddits`;
 
+const loadingBarContainer: HTMLElement = document.getElementById("LoadingBar");
+const bar = document.createElement("div");
+loadingBarContainer.appendChild(bar);
+
+
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+};
+
+var socket = io();
+socket.on('connect', function() {
+    socket.emit('my event', {data: 'I\'m connected!'});
+    console.log("Connected");
+});
+
+socket.on("message", function(message) {
+    console.log(message);
+});
+
+socket.on("build_update", function(task: TaskData) {
+    console.log(task);
+    if (task.state === "FINISHED") {
+        bar.innerHTML = "";
+        (async () => {
+            // Do something before delay
+            await sleep(5500);
+            await requestTitles(task.subreddit);
+            // Do something after
+        })();
+
+    } else {
+        let percent: number;
+        percent = (task.current / task.total) * 100;
+        percent = Math.round(percent);
+        console.log("Percent complete: ", percent);
+        bar.innerHTML = `<progress id="downloading_percentage" class="progress is-primary" value="${percent}" max="100">${percent}%</progress>`;
+    }
+});
 
 /**
  * Add posts to the page.
@@ -55,32 +95,19 @@ async function requestTitles(subreddit: string): Promise<void> {
         });
 }
 
-async function requestSubredditCreation(url: string): Promise<void> {
-    await makeBuildRequest(url)
+async function requestSubredditCreation(subreddit: string): Promise<void> {
+    return makeBuildRequest(subreddit)
         .then(taskID => {
-            const buildURL = `${API_ROOT}/tasks/${taskID}`;
-            let finished = false;
-            const loadingBarContainer: HTMLElement = document.getElementById("LoadingBar");
-            const bar = document.createElement("div");
             bar.innerHTML = `<progress id="downloading_percentage" class="progress is-primary" value="0" max="100">0%</progress>`;
-            while (!finished) {
-                let prog_per = fetch(buildURL)
-                    .then(res => res.json() as Promise<TaskResponse>)
-                    .then(data => {
-                        const per = data.data.current / data.data.total
-                        if (per >= 100) {
-                            finished = true;
-                        } else {
-                            
-                        }
-                    });
-            }
+            socket.emit("build_request", {buildID: taskID});
+            console.log("Build request emitted for: ", taskID);
         });
 
 }
 
-async function makeBuildRequest(url: string): Promise<string> {
-    const data = await fetch(url);
+async function makeBuildRequest(subreddit: string): Promise<string> {
+    const url = `${API_ROOT}/subreddits/${subreddit}`;
+    const data = await fetch(url, {method: "POST"});
     const res = await (data.json() as Promise<SubredditBuildRequest>);
     return res.data.task_id;
 }
