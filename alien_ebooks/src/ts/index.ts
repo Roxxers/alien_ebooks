@@ -44,17 +44,14 @@ socket.on("message", function(message) {
     console.log(message);
 });
 
-socket.on("build_update", function(task: TaskData) {
+socket.on("build_update", async (task: TaskData) => {
     console.log(task);
     if (task.state === "FINISHED") {
         bar.innerHTML = "";
-        (async () => {
-            // Do something before delay
-            await sleep(5500);
-            await requestTitles(task.subreddit);
-            // Do something after
-        })();
-
+        // Do something before delay
+        await sleep(5500);
+        await requestTitles(task.subreddit);
+        // Do something after
     } else {
         let percent: number;
         percent = (task.current / task.total) * 100;
