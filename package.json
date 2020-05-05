@@ -30,7 +30,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^4.2.0",
     "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "sass-loader": "^8.0.0",
     "socket.io-client": "^2.3.0",
     "ts-loader": "^6.2.0",
