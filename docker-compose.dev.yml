@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+    web:
+        build:
+            context: ./
+            dockerfile: dev.Dockerfile
+        image: alien_ebooks:dev
+        container_name: alien_ebooks_webapp
+        volumes:
+            - ./:/usr/src/app
+    celery:
+        image: alien_ebooks:dev
+        container_name: alien_ebooks_celery
+        volumes:
+            - ./:/usr/src/app
+
+    webpack:
+        image: alien_ebooks:dev
+        container_name: alien_ebooks_webpack
+        volumes:
+            - ./:/usr/src/app
+        # Need to rebuild sass on container boot due to weird bug
+        command: /bin/bash -c "npm rebuild node-sass && ./node_modules/.bin/webpack --display-modules --progress --watch --optimize-minimize --mode production"
+        depends_on: 
+            - web
+        restart: always

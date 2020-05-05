@@ -22,31 +22,31 @@ services:
     ports:
       - 6379:6379
 
+  web:
+    build:
+      context: ./
+      dockerfile: prod.Dockerfile
+    image: alien_ebooks:latest
+    container_name: alien_ebooks_web
+    restart: always
+    env_file: .env
+    environment:
+      - EBOOKS_USING_DOCKER=1 
+    ports:
+      - 127.0.0.1:5000:5000
+
+    depends_on:
+      - db
+      - redis
+      - celery
+    
   celery:
-    build: ./
+    image: alien_ebooks:latest
+    container_name: alien_ebooks_celery
     restart: always
     env_file: .env
     environment:
       - EBOOKS_USING_DOCKER=1 
     command: celery -A alien_ebooks.celery worker -l info
-    volumes:
-      - ./:/usr/src/app
     depends_on:
       - redis
-
-  web:
-    restart: always
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    env_file: .env
-    environment:
-      - EBOOKS_USING_DOCKER=1 
-    volumes:
-      - ./:/usr/src/app
-    ports:
-      - 127.0.0.1:5000:5000
-    depends_on:
-      - db
-      - redis
-      - celery
