@@ -4,7 +4,9 @@ FROM alien_ebooks:latest
 
 USER root
 
-RUN apk add --no-cache npm &&\
+ENV NODE_ENV development
+
+RUN apk add --no-cache npm bash &&\
     npm install typescript webpack webpack-cli ts-loader &&\
     npm cache clean --force
 

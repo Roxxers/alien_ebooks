@@ -14,15 +14,13 @@ WORKDIR /usr/src/app
 # Make sure new user owns the app folder
 # Install Python libs and compile Typescript files using webpack
 # Then clean up files
+
+ENV PIPENV_SYSTEM true
+
 RUN apk add --no-cache --update build-base postgresql-dev npm &&\
     adduser ebook --disabled-password --gecos "" &&\
     chown -R ebook /usr/src/app &&\
-    npm install typescript webpack webpack-cli ts-loader &&\
-    pip install pipenv --no-cache-dir &&\
-    pipenv install --system --deploy --ignore-pipfile &&\
-    npx webpack &&\
-    npm r typescript webpack webpack-cli ts-loader &&\
-    npm cache clean --force &&\
+    make docker-install-deps &&\
     apk del build-base npm --purge -r
 
 # Become created user
