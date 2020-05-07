@@ -14,38 +14,20 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-.nsfw {
-    color: $danger;
-    background-color: transparent;
-    border-color: $danger;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 15%;
-    padding-bottom: calc(0.2em - 1px);
-    padding-left: 0.2em;
-    padding-right: 0.2em;
-    padding-top: calc(0.2em - 1px);
-    font-size: 0.6em;
-}
 
-.placeholder {
-    width: 64px;
-    height: 64px;
-    border-radius: 4px;
-    text-align: center;
-    padding: 19px 0;
-    background-color: rgba(255,255,255,0.1);
-    color: $grey-light
-}
+export const loadingBar: HTMLElement = document.getElementById("downloading_percentage");
 
-// Sticky footer code
-
-.site {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-}
-  
-.site-content {
-    flex: 1;
+export async function updateLoadingBar(task): Promise<void> {
+    if (task.state === "FINISHED") {
+        loadingBar.classList.add("is-hidden");
+        // Do something before delay
+        // await requestTitles(task.subreddit);
+        // Do something after
+    } else {
+        let percent: number;
+        percent = (task.current / task.total) * 100;
+        percent = Math.round(percent);
+        console.log("Percent complete: ", percent);
+        loadingBar.setAttribute("value", percent.toString());
+    }
 }

@@ -16,6 +16,7 @@
 
 import { createTitleElements } from "./elements";
 import { MarkovPost, SubredditBuildRequest, SubredditMarkovEndpoint, TaskData } from "./endpoints";
+import { loadingBar, updateLoadingBar } from "./loadingBar";
 
 import "../sass/bulma.scss";
 
@@ -25,40 +26,20 @@ import io from "socket.io-client";
 const API_ROOT: string = "/api/v1";
 const SUBREDDIT_ROOT: string = `${API_ROOT}/subreddits`;
 
-const loadingBarContainer: HTMLElement = document.getElementById("LoadingBar");
-const bar = document.createElement("div");
-loadingBarContainer.appendChild(bar);
 
-
-const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
-};
-
-var socket = io();
+const socket = io();
 socket.on('connect', function() {
     socket.emit('my event', {data: 'I\'m connected!'});
     console.log("Connected");
 });
 
-socket.on("message", function(message) {
+socket.on("message", (message: string) => {
     console.log(message);
 });
 
 socket.on("build_update", async (task: TaskData) => {
     console.log(task);
-    if (task.state === "FINISHED") {
-        bar.innerHTML = "";
-        // Do something before delay
-        await sleep(5500);
-        await requestTitles(task.subreddit);
-        // Do something after
-    } else {
-        let percent: number;
-        percent = (task.current / task.total) * 100;
-        percent = Math.round(percent);
-        console.log("Percent complete: ", percent);
-        bar.innerHTML = `<progress id="downloading_percentage" class="progress is-primary" value="${percent}" max="100">${percent}%</progress>`;
-    }
+    await updateLoadingBar(task);
 });
 
 /**
@@ -95,9 +76,9 @@ async function requestTitles(subreddit: string): Promise<void> {
 async function requestSubredditCreation(subreddit: string): Promise<void> {
     return makeBuildRequest(subreddit)
         .then(taskID => {
-            bar.innerHTML = `<progress id="downloading_percentage" class="progress is-primary" value="0" max="100">0%</progress>`;
             socket.emit("build_request", {buildID: taskID});
             console.log("Build request emitted for: ", taskID);
+            loadingBar.classList.remove("is-hidden");
         });
 
 }

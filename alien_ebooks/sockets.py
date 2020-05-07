@@ -21,12 +21,13 @@ def emit_build_update(task, room):
 
 @socketio.on("build_request")
 def handle_build_request(json):
-    finished = False
     room = request.sid
     task = celery.add_titles_to_db.AsyncResult(json["buildID"])
 
     if not task.info:
-        socketio.send("Build request doesn't exist", room=room)
+        socketio.send(
+            "Build request doesn't exist: %s" % json["buildID"], room=room
+        )
     else:
         # Task does exist
         while task.status != "FINISHED":
