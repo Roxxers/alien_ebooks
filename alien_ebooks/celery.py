@@ -18,7 +18,7 @@
 
 import time
 from celery import Celery
-from pony.orm import db_session, TransactionIntegrityError
+from pony.orm import commit, db_session, TransactionIntegrityError
 
 from alien_ebooks import config, models, reddit
 
@@ -64,21 +64,23 @@ def add_titles_to_db(self, subreddit_name: str):
             id=int(subreddit.id, 36), name=subreddit.display_name.lower()
         )
 
-        # Iterate through all posts we can get and add them to the database, incrementing status and processed each time
-        for submission in subreddit.top(limit=None):
-            models.Titles(
-                id=int(submission.id, 36),
-                title=submission.title,
-                subreddit=db_sub,
-                number_of_comments=submission.num_comments,
-                nsfw=bool(submission.over_18)
-            )
-            meta["current"] += 1
-            self.update_state(state="PROCESSING", meta=meta)
+        with db_session:
+            # Iterate through all posts we can get and add them to the database, incrementing status each time
+            for submission in subreddit.top(limit=None):
+                models.Titles(
+                    id=int(submission.id, 36),
+                    title=submission.title,
+                    subreddit=db_sub,
+                    number_of_comments=submission.num_comments,
+                    nsfw=bool(submission.over_18)
+                )
+                meta["current"] += 1
+                self.update_state(state="PROCESSING", meta=meta)
+            commit()
         meta["finished"] = True
         self.update_state(state="FINISHED", meta=meta)
         # Added sleep to give client's time to see that the task is completed before it is deleted from the queue.
-        time.sleep(5)
+        time.sleep(2)
 
     except TransactionIntegrityError as e:
         # TODO: Add logging error here
