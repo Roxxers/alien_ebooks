@@ -1,5 +1,5 @@
 
-import { MarkovPost } from "./endpoints";
+import { MarkovPost } from "./api/endpoints";
 
 /**
  * Creates element that fits with the bulma framework

@@ -15,6 +15,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+export const API_ROOT: string = "/api/v1";
+export const SUBREDDIT_ROOT: string = `${API_ROOT}/subreddits`;
+
 /**
  * BaseResponse of all api endpoints.
  */

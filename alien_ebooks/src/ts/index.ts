@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import * as api from "./api/api";
+import { MarkovPost, SubredditMarkovEndpoint, TaskData } from "./api/endpoints";
 import { createTitleElements } from "./elements";
-import { MarkovPost, SubredditBuildRequest, SubredditMarkovEndpoint, TaskData } from "./endpoints";
 import { loadingBar, updateLoadingBar } from "./loadingBar";
 
 import "../sass/bulma.scss";
@@ -23,13 +24,9 @@ import "../sass/bulma.scss";
 import io from "socket.io-client";
 
 
-const API_ROOT: string = "/api/v1";
-const SUBREDDIT_ROOT: string = `${API_ROOT}/subreddits`;
-
-
 const socket = io();
-socket.on('connect', function() {
-    socket.emit('my event', {data: 'I\'m connected!'});
+socket.on("connect", () => {
+    socket.emit("my event", {data: "I'm connected!"});
     console.log("Connected");
 });
 
@@ -64,44 +61,12 @@ function add_titles_to_html(response: SubredditMarkovEndpoint): void {
     }
 }
 
-
-async function requestTitles(subreddit: string): Promise<void> {
-    const url: string = `${SUBREDDIT_ROOT}/${subreddit}/markov?amount=5`;
-    await fetch(url)
-        .then(async res => {
-            add_titles_to_html(await res.json() as SubredditMarkovEndpoint);
-        });
-}
-
 async function requestSubredditCreation(subreddit: string): Promise<void> {
-    return makeBuildRequest(subreddit)
+    return api.makeBuildRequest(subreddit)
         .then(taskID => {
             socket.emit("build_request", {buildID: taskID});
             console.log("Build request emitted for: ", taskID);
             loadingBar.classList.remove("is-hidden");
-        });
-
-}
-
-async function makeBuildRequest(subreddit: string): Promise<string> {
-    const url = `${API_ROOT}/subreddits/${subreddit}`;
-    const data = await fetch(url, {method: "POST"});
-    const res = await (data.json() as Promise<SubredditBuildRequest>);
-    return res.data.task_id;
-}
-
-
-async function checkSubredditExists(subreddit: string): Promise<boolean> {
-    const url: string = `${SUBREDDIT_ROOT}/${subreddit}`;
-    return fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                return true;
-            } else if (res.status === 404) {
-                return false;
-            } else {
-                return null; // If this happens something has seriously gone wrong
-            }
         });
 }
 
@@ -116,16 +81,15 @@ async function titleRequestListener(event: Event): Promise<void> {
     const form: HTMLFormElement = document.forms.namedItem("sInput");
     const subreddit: string = form.sName.value;
 
-    await checkSubredditExists(subreddit)
+    await api.checkSubredditExists(subreddit)
         .then(async exists => {
-            if (!exists && exists != null) {
+            if (!exists) {
                 await requestSubredditCreation(subreddit);
-            } else if (exists === null) {
-                console.error("Shit fucked yo");
+            } else {
+                const titles = await api.requestTitles(subreddit);
+                add_titles_to_html(titles);
             }
-            await requestTitles(subreddit);
-        }
-    );
+        });
     button.disabled = false;
 }
 
