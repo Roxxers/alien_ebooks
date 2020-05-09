@@ -1,6 +1,8 @@
 
 import { MarkovPost } from "./api/endpoints";
 
+const censoredName: string = "██████████";
+
 /**
  * Creates element that fits with the bulma framework
  * @param tag - html tag for element
@@ -55,7 +57,7 @@ export function createTitleElements(posts: MarkovPost[]): HTMLElement[] {
             title += ` <span class="nsfw">NSFW</span>`;
         }
 
-        const postMetaLine = `<span class="has-text-grey is-size-7"><strong>r/${post.subreddit}</strong> by u/exampleuser`;
+        const postMetaLine = `<span class="has-text-grey is-size-7"><strong>r/${post.subreddit}</strong> by u/${censoredName}`;
         const commentsCounter = `<span class="icon"><i class="fas fa-comment-alt"></i></span> ${post.comments} Comments</span>`;
 
 
